@@ -1,5 +1,6 @@
 package com.codecool.spingboot_tasks.error_handling.service;
 
+import com.codecool.spingboot_tasks.error_handling.exceptions.ProductNotFoundException;
 import com.codecool.spingboot_tasks.error_handling.model.Product;
 import com.codecool.spingboot_tasks.error_handling.repository.ProductRepository;
 import org.springframework.stereotype.Service;
@@ -20,7 +21,8 @@ public class ProductService {
         return productRepository.findAll();
     }
 
-    public List<Product> getProduct(long id) {
+    public List<Product> getProduct(long id) throws ProductNotFoundException {
         return productRepository.findById(id);
     }
+
 }
