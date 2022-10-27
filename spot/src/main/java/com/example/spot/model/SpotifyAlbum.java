@@ -22,7 +22,7 @@ public class SpotifyAlbum {
     @JsonProperty("artists")
     private Artists artists;
     @JsonProperty("tracks")
-    private Tracks tracks;
+    private Track tracks;
     @JsonIgnore
     private Map<String, Object> additionalProperties = new HashMap<String, Object>();
 
@@ -37,12 +37,12 @@ public class SpotifyAlbum {
     }
 
     @JsonProperty("tracks")
-    public Tracks getTracks() {
+    public Track getTracks() {
         return tracks;
     }
 
     @JsonProperty("tracks")
-    public void setTracks(Tracks tracks) {
+    public void setTracks(Track tracks) {
         this.tracks = tracks;
     }
 

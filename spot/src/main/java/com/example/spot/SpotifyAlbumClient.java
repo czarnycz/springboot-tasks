@@ -2,9 +2,9 @@ package com.example.spot;
 
 import com.example.spot.dto.SpotifyAlbumDto;
 import com.example.spot.dto.SpotifyTrackDto;
-import com.example.spot.entity.Track;
 import com.example.spot.model.SpotifyAlbum;
 import com.example.spot.model2.SpotifyTrack;
+import com.example.spot.model2.Track;
 import com.example.spot.repository.Trackrepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpEntity;
@@ -48,27 +48,32 @@ public class SpotifyAlbumClient {
 
         return spotifyAlbumDtos;
     }
-//    TODO
-//    @GetMapping("/track/{trackName}")
-//    public List<SpotifyTrackDto> getTrack(OAuth2Authentication details, @PathVariable String trackName){
-//        String jwt = ((OAuth2AuthenticationDetails)details.getDetails()).getTokenValue();
-//
-//        RestTemplate restTemplate = new RestTemplate();
-//        HttpHeaders httpHeaders = new HttpHeaders();
-//        httpHeaders.add("Authorization","Bearer " + jwt);
-//        HttpEntity httpEntity = new HttpEntity(httpHeaders);
-//
-//        ResponseEntity<SpotifyTrack> exchange = restTemplate.exchange("https://api.spotify.com/v1/search?q="+ trackName + "&type=track&market=US&limit=1&offset=5",
-//                HttpMethod.GET,
-//                httpEntity,
-//                SpotifyTrack.class);
-//
-//       List<SpotifyTrackDto> spotifyTrackDtos = exchange.getBody().
-//    }
+
+    @GetMapping("/track/{trackName}")
+    public List<SpotifyTrackDto> getTrack(OAuth2Authentication details, @PathVariable String trackName){
+        String jwt = ((OAuth2AuthenticationDetails)details.getDetails()).getTokenValue();
+
+        RestTemplate restTemplate = new RestTemplate();
+        HttpHeaders httpHeaders = new HttpHeaders();
+        httpHeaders.add("Authorization","Bearer " + jwt);
+        HttpEntity httpEntity = new HttpEntity(httpHeaders);
+
+        ResponseEntity<SpotifyTrack> exchange = restTemplate.exchange("https://api.spotify.com/v1/search?q="+ trackName + "&type=track&market=US&limit=1&offset=5",
+                HttpMethod.GET,
+                httpEntity,
+                SpotifyTrack.class);
+
+       List<SpotifyTrackDto> spotifyTrackDtos = exchange.getBody().getTrack().getItems().stream()
+               .map(item-> new SpotifyTrackDto(item.getName(),item.getAlbum().getImages().get(0).getUrl()))
+               .collect(Collectors.toList());
+
+       return spotifyTrackDtos;
+
+    }
 
 
     @PostMapping("/add-track")
-    public void save(@RequestBody Track track) {
+    public void save(@RequestBody com.example.spot.entity.Track track) {
         repo.save(track);
     }
 }

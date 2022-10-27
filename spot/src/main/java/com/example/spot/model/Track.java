@@ -23,7 +23,7 @@ import com.fasterxml.jackson.annotation.JsonPropertyOrder;
     "total"
 })
 @Generated("jsonschema2pojo")
-public class Tracks {
+public class Track {
 
     @JsonProperty("href")
     private String href;
