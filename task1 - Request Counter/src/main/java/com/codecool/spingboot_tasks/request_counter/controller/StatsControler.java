@@ -10,7 +10,7 @@ import java.util.List;
 @RestController
 public class StatsControler {
 
-    private RequestCountStatsService service;
+    private  RequestCountStatsService service;
 
     @GetMapping("/api/statistics")
     public List<Statistics> get(){
